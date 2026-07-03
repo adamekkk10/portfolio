@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FactCheck</title>
+  <link rel="stylesheet" href="sidepanel.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="icons/icon48.png" alt="" width="20" height="20" />
+      <span>FactCheck</span>
+    </div>
+    <button id="recheckBtn" class="icon-btn" title="Re-check this page" hidden>&#8635;</button>
+  </header>
+
+  <main id="app">
+    <!-- Populated entirely by sidepanel.js based on the state pushed from
+         the background service worker. -->
+    <div id="emptyState" class="state-view">
+      <p>Click the FactCheck icon on any webpage to check its claims.</p>
+    </div>
+  </main>
+
+  <template id="tpl-loading">
+    <div class="state-view loading">
+      <div class="spinner" aria-hidden="true"></div>
+      <p>Reading the page and checking claims&hellip;</p>
+      <p class="muted small page-meta"></p>
+    </div>
+  </template>
+
+  <template id="tpl-error">
+    <div class="state-view error">
+      <p class="error-message"></p>
+      <button class="link-btn" id="openOptionsBtn">Open options page</button>
+    </div>
+  </template>
+
+  <template id="tpl-no-claims">
+    <div class="state-view">
+      <p>No checkable claims found on this page.</p>
+      <p class="muted small page-meta"></p>
+    </div>
+  </template>
+
+  <template id="tpl-claim">
+    <article class="claim-card">
+      <div class="claim-head">
+        <span class="badge"></span>
+      </div>
+      <p class="claim-text"></p>
+      <p class="claim-explanation"></p>
+      <div class="claim-sources"></div>
+    </article>
+  </template>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>

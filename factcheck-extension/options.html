@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FactCheck Options</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <main>
+    <h1>FactCheck settings</h1>
+
+    <label for="apiKey">Anthropic API key</label>
+    <input
+      type="password"
+      id="apiKey"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="sk-ant-..."
+    />
+
+    <div class="row">
+      <button id="saveBtn">Save</button>
+      <button id="clearBtn" class="secondary">Clear</button>
+      <span id="status" class="status" role="status"></span>
+    </div>
+
+    <p class="note">
+      Your API key is stored only in this browser's local extension storage
+      (<code>chrome.storage.local</code>). It is never sent anywhere except
+      directly to Anthropic's API (<code>api.anthropic.com</code>) when you
+      run a fact-check, and it is never bundled with or hardcoded into this
+      extension. Uninstalling the extension or clearing its storage removes
+      the key permanently.
+    </p>
+
+    <p class="note">
+      Need a key? Create one at
+      <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener noreferrer">
+        console.anthropic.com
+      </a>.
+    </p>
+  </main>
+
+  <script src="options.js"></script>
+</body>
+</html>
