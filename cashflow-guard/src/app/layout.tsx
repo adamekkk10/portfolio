@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+
+import { MotionProvider } from "@/components/motion/motion-provider";
 import "./globals.css";
 
 const inter = Inter({
@@ -24,8 +26,17 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="cs" className={`${inter.variable} h-full antialiased`}>
+      <head>
+        {/*
+          Animované bloky startují na opacity: 0. Bez JavaScriptu by se nikdy
+          nezobrazily, proto je pro tento případ přepneme rovnou do cílového stavu.
+        */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+      </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        {children}
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   );

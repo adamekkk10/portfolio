@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, CheckCircle2, Lock } from "lucide-react";
 
+import { EASE_OUT, fadeInUp } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -32,16 +34,37 @@ export function LeadCaptureForm() {
 
   return (
     <section id="formular" className="scroll-mt-16 border-t border-border py-20 sm:py-24">
-      <div className="mx-auto max-w-lg px-6">
+      <motion.div
+        data-reveal=""
+        variants={fadeInUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.55, ease: EASE_OUT }}
+        className="mx-auto max-w-lg px-6"
+      >
         <Card className="gap-0 p-0 shadow-lg shadow-primary/10 ring-2 ring-primary/20">
           <div aria-hidden="true" className="h-1.5 w-full bg-primary" />
 
+          <AnimatePresence mode="wait" initial={false}>
           {submitted ? (
+            <motion.div
+              key="success"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, ease: EASE_OUT }}
+            >
             <CardContent className="px-7 py-12 text-center sm:px-9">
-              <CheckCircle2
-                className="mx-auto size-11 text-primary"
-                aria-hidden="true"
-              />
+              <motion.div
+                initial={{ scale: 0.6, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.45, delay: 0.1, ease: EASE_OUT }}
+              >
+                <CheckCircle2
+                  className="mx-auto size-11 text-primary"
+                  aria-hidden="true"
+                />
+              </motion.div>
               <p className="mt-5 text-xl font-semibold tracking-tight">
                 Máme to. Místo držíme pro vás.
               </p>
@@ -50,8 +73,9 @@ export function LeadCaptureForm() {
                 a domluvíme osobní onboarding.
               </p>
             </CardContent>
+            </motion.div>
           ) : (
-            <>
+            <motion.div key="form" exit={{ opacity: 0, y: -8 }}>
               <CardHeader className="px-7 pt-9 sm:px-9">
                 <CardTitle className="text-2xl font-semibold tracking-[-0.02em] text-balance">
                   Zajistit si 1 ze 3 zbývajících míst
@@ -134,10 +158,11 @@ export function LeadCaptureForm() {
                   </p>
                 </form>
               </CardContent>
-            </>
+            </motion.div>
           )}
+          </AnimatePresence>
         </Card>
-      </div>
+      </motion.div>
     </section>
   );
 }

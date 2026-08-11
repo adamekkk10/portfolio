@@ -1,4 +1,9 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Gavel, Mail, MessageSquareWarning, type LucideIcon } from "lucide-react";
+
+import { EASE_OUT, fadeInUp, iconWiggle } from "@/components/motion/reveal";
 
 type Step = {
   icon: LucideIcon;
@@ -32,17 +37,36 @@ export function HowItWorks() {
   return (
     <section className="border-t border-border py-20 sm:py-24">
       <div className="mx-auto max-w-6xl px-6">
-        <h2 className="mx-auto max-w-3xl text-center text-3xl font-semibold tracking-[-0.02em] text-balance sm:text-4xl">
+        <motion.h2
+          data-reveal=""
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.55, ease: EASE_OUT }}
+          className="mx-auto max-w-3xl text-center text-3xl font-semibold tracking-[-0.02em] text-balance sm:text-4xl"
+        >
           Jak vracíme peníze na účet{" "}
           <span className="text-muted-foreground">
             (aniž byste hnuli prstem)
           </span>
-        </h2>
+        </motion.h2>
 
         <ol className="mt-14 grid gap-10 sm:mt-20 md:grid-cols-3 md:gap-8">
           {steps.map(({ icon: Icon, day, title, description }, index) => (
-            <li
+            <motion.li
               key={day}
+              data-reveal=""
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              whileHover="hover"
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{
+                duration: 0.55,
+                delay: index * 0.12,
+                ease: EASE_OUT,
+              }}
               className="relative flex gap-5 md:flex-col md:items-center md:gap-0 md:text-center"
             >
               {/* Spojnice mezi kroky: svisle na mobilu, vodorovně na desktopu */}
@@ -53,12 +77,15 @@ export function HowItWorks() {
                 />
               )}
 
-              <div className="relative flex size-14 shrink-0 items-center justify-center rounded-full border border-border bg-background text-primary shadow-sm">
+              <motion.div
+                variants={iconWiggle}
+                className="relative flex size-14 shrink-0 items-center justify-center rounded-full border border-border bg-background text-primary shadow-sm"
+              >
                 <Icon className="size-6" aria-hidden="true" />
                 <span className="absolute -top-1.5 -right-1.5 flex size-6 items-center justify-center rounded-full bg-primary text-[0.6875rem] font-semibold text-primary-foreground shadow-sm">
                   {index + 1}
                 </span>
-              </div>
+              </motion.div>
 
               <div className="pb-2 md:pb-0">
                 <p className="mt-1 text-xs font-semibold tracking-[0.08em] text-primary uppercase md:mt-6">
@@ -71,7 +98,7 @@ export function HowItWorks() {
                   {description}
                 </p>
               </div>
-            </li>
+            </motion.li>
           ))}
         </ol>
       </div>
